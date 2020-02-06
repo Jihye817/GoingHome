@@ -14,6 +14,8 @@ import {
   View,
   Text,
   StatusBar,
+  Button,
+  TouchableOpacity,
 } from 'react-native';
 
 import {
@@ -24,85 +26,89 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+import CountDown from 'react-native-countdown-component';
+
 const App: () => React$Node = () => {
   return (
     <>
       <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
+      <SafeAreaView style={styles.wrapper}>
+        <View style={styles.headView}>
+          <Text style={styles.headText}>집에 가기 까지</Text>
+        </View>
+        <View style={styles.countView}>
+          <CountDown
+            style={styles.countdown}
+            until={10}
+            onFinish={() => alert('야호~ 집에가자!!')}
+            onPress={() => alert('집에 가고 싶지..? \n다 알아.. 근데 이거 버튼 아니야...')}
+            digitStyle={{backgroundColor:'rgba(0, 0, 0, 0.5)'}}
+            digitTxtStyle={{color: '#fff'}}
+            timeToShow={['H', 'M', 'S']}
+            timeLabels={{m: null, s: null}}
+            //timeLabels={{h:'시간', m:'분', s:'초'}}
+            separatorStyle={{color:'#fff'}}
+            showSeparator
+            size={35}
+          />
+        </View>
+        <View style={styles.buttonView}>
+          <TouchableOpacity style={styles.homebtn} /*onPress={() => alert('나도~')}*/>
+            <Text style={styles.homebtntxt}>집에가구싶당</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.clickedView}>
+          <Text>Cilcked : </Text>
+        </View>
       </SafeAreaView>
     </>
   );
 };
 
 const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
+  wrapper: {
+    flex: 1,
+    backgroundColor: '#dea'
   },
-  engine: {
-    position: 'absolute',
-    right: 0,
+  headView: {
+    marginTop: 50,
+    backgroundColor: '#bae',
+    justifyContent: "center",
+    alignItems: 'center',
   },
-  body: {
-    backgroundColor: Colors.white,
+  headText: {
+    justifyContent: "center",
+    color:'#fff',
+    fontSize: 30
   },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  countView:{
+    marginTop:50,
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
+  countdown: {
+    justifyContent: 'center',
+    alignItems: 'center'
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
+  buttonView: {
+    marginTop: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  highlight: {
-    fontWeight: '700',
+  homebtn: {
+    backgroundColor: 'blue',
+    padding: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius:10,
+    width:200
   },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
+  homebtntxt: {
+    color:'#fff',
+    fontSize: 20,
+  },
+  clickedView: {
+    marginTop: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
