@@ -6,7 +6,7 @@
  * @flow
  */
 
-import React from 'react';
+import React, {Component} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -28,18 +28,49 @@ import {
 
 import CountDown from 'react-native-countdown-component';
 
-const App: () => React$Node = () => {
+
+export default class App extends Component {
+//const App: () => React$Node = () => {
+
+  constructor(props) {
+    super(props);
+    this.state = {count : 0, date:''}
+  }
+
+  onPress = () => {
+    this.setState({
+      count: this.state.count+1
+    })
+  }
+
+  componentDidMount() {
+    var that = this;
+    var date = new Date().getDate(); //Current Date
+    var month = new Date().getMonth() + 1; //Current Month
+    var year = new Date().getFullYear(); //Current Year
+    var hours = new Date().getHours(); //Current Hours
+    var min = new Date().getMinutes(); //Current Minutes
+    var sec = new Date().getSeconds(); //Current Seconds
+    that.setState({
+      //Setting the value of the date time
+      date:
+        date + '/' + month + '/' + year + ' ' + hours + ':' + min + ':' + sec,
+    });
+  }
+
+  render() {
   return (
     <>
       <StatusBar barStyle="dark-content" />
       <SafeAreaView style={styles.wrapper}>
         <View style={styles.headView}>
+          <Text style={{fontSize:20, color: 'red'}}>{this.state.date}</Text>
           <Text style={styles.headText}>집에 가기 까지</Text>
         </View>
         <View style={styles.countView}>
           <CountDown
             style={styles.countdown}
-            until={10}
+            until={1000}
             onFinish={() => alert('야호~ 집에가자!!')}
             onPress={() => alert('집에 가고 싶지..? \n다 알아.. 근데 이거 버튼 아니야...')}
             digitStyle={{backgroundColor:'rgba(0, 0, 0, 0.5)'}}
@@ -53,16 +84,17 @@ const App: () => React$Node = () => {
           />
         </View>
         <View style={styles.buttonView}>
-          <TouchableOpacity style={styles.homebtn} /*onPress={() => alert('나도~')}*/>
+          <TouchableOpacity style={styles.homebtn} onPress={this.onPress}>
             <Text style={styles.homebtntxt}>집에가구싶당</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.clickedView}>
-          <Text>Cilcked : </Text>
+          <Text>Cilcked : { this.state.count !== 0 ? this.state.count: 0} </Text>
         </View>
       </SafeAreaView>
     </>
   );
+  };
 };
 
 const styles = StyleSheet.create({
@@ -111,5 +143,3 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-
-export default App;
